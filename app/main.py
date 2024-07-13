@@ -134,6 +134,10 @@ class Scanner:
                 self.add_token(TokenType.LEFT_PAREN)
             case ")":
                 self.add_token(TokenType.RIGHT_PAREN)
+            case "{":
+                self.add_token(TokenType.LEFT_BRACE)
+            case "}":
+                self.add_token(TokenType.RIGHT_BRACE)
 
     def print_tokens(self) -> None:
         """Print the tokens."""
