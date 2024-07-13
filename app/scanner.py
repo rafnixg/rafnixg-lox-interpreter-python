@@ -1,5 +1,6 @@
 """A module for scanning the Lox code."""
 
+import sys
 from app.token import Token, TokenType
 
 
@@ -12,6 +13,17 @@ class Scanner:
         self.start: int = 0
         self.current: int = 0
         self.line: int = 1
+        self.error = False
+
+    def error_message(self, message: str) -> None:
+        """Print an error message."""
+        self.report(self.line, "", message)
+
+    def report(self, line: int, where: str, message: str) -> None:
+        """Print an error message."""
+        print(f"[line {line}] Error{where}: {message}", file=sys.stderr)
+        self.error = True
+        # exit(65)
 
     def is_at_end(self) -> bool:
         """Check if the scanner is at the end of the source code."""
@@ -58,6 +70,8 @@ class Scanner:
                 self.add_token(TokenType.SEMICOLON)
             case "*":
                 self.add_token(TokenType.STAR)
+            case _:
+                self.error_message(f"Unexpected character: {c}")
 
     def print_tokens(self) -> None:
         """Print the tokens."""

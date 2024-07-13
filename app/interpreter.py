@@ -1,4 +1,5 @@
 """A module to interpret the Lox code."""
+
 import sys
 from app.scanner import Scanner
 
@@ -7,10 +8,13 @@ class Interpreter:
     """A class to interpret the Lox code."""
 
     def __init__(self, filename: str) -> None:
+        """Initialize the interpreter.
+        Args:
+            - filename (str): The name of the file to interpret.
+        """
         self.filename = filename
         self.file_contents = None
         self.command = None
-        self.read_file()
 
     def read_file(self) -> None:
         """Read the file contents."""
@@ -19,9 +23,13 @@ class Interpreter:
 
     def run(self, command: str) -> None:
         """Run the interpreter."""
+        self.read_file()
         self.command = command
-        command_func = getattr(self, command, self.default_command)
-        command_func()
+        self.handle_command()
+
+    def handle_command(self) -> None:
+        """Handle the command."""
+        return getattr(self, self.command, self.default_command)()
 
     def default_command(self) -> None:
         """Print an error message for an unknown command."""
@@ -33,3 +41,5 @@ class Interpreter:
         scanner = Scanner(self.file_contents)
         scanner.scan_tokens()
         scanner.print_tokens()
+        if scanner.error:
+            exit(65)
