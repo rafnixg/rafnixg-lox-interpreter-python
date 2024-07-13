@@ -20,13 +20,9 @@ class Interpreter:
     def run(self) -> None:
         """Run the interpreter."""
         self.read_file()
-        if not self.file_contents:
-            raise NotImplementedError("Prompt not implemented")
-        else:
-            # print("EOF  null") # Placeholder, remove this line when implementing the scanner
-            scanner = Scanner(self.file_contents)
-            scanner.scan_tokens()
-            scanner.print_tokens()
+        scanner = Scanner(self.file_contents)
+        scanner.scan_tokens()
+        scanner.print_tokens()
 
 
 class TokenType(Enum):
