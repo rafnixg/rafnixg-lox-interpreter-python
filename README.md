@@ -3,31 +3,41 @@
 This is a starting point for Python solutions to the
 ["Build Your Own Build your own Interpreter" Challenge](https://app.codecrafters.io/courses/interpreter/overview).
 
-_Add a description of your course here_
+In this challenge, you'll build a simple interpreter for a custom language.
+Lox is a simple language that supports variables, control flow, and functions.
 
-**Note**: If you're viewing this repo on GitHub, head over to
-[codecrafters.io](https://codecrafters.io) to try the challenge.
+**Note**: To try the challenge: [codecrafters.io](https://codecrafters.io)
 
-# Passing the first stage
+# Lox Interpreter in Python
 
-The entry point for your `<fill_in_executable_name>` implementation is in
-`app/main.py`. Study and uncomment the relevant code, and push your changes to
-pass the first stage:
+This is a Python implementation of the Lox interpreter. It is based on the book [Crafting Interpreters](https://craftinginterpreters.com/).
 
-```sh
-git add .
-git commit -m "pass 1st stage" # any msg
-git push origin master
+## Running the interpreter
+
+To run the interpreter, you can use the following command:
+
+```bash
+$ ./your_program.sh <path_to_lox_file>
 ```
 
-Time to move on to the next stage!
+For example:
 
-# Stage 2 & beyond
+```bash
+$ ./your_program.sh examples/hello_world.lox
+Hello, world!
+```
 
-Note: This section is for stages 2 and beyond.
+## Supported features
 
-1. Ensure you have `python (3.12)` installed locally
-1. Run `./<fill_in_script_name>.sh` to run your program, which is implemented in
-   `app/main.py`.
-1. Commit your changes and run `git push origin master` to submit your solution
-   to CodeCrafters. Test output will be streamed to your terminal.
+Actually, the interpreter is not fully implemented.
+
+[x] Scanning and tokenizing
+[-] Parsing
+[-] Evaluating expressions
+[-] Evaluating statements
+[-] Arithmetic operations
+[-] Variables
+[-] Control flow (if statements)
+[-] Functions
+[-] Standard library functions (e.g. `clock()`)
+[-] Classes
