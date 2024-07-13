@@ -100,6 +100,8 @@ class Scanner:
                         self.advance()
                 else:
                     self.add_token(TokenType.SLASH)
+            case " ", "\r", "\t":
+                pass
             case _:
                 self.error_message(f"Unexpected character: {c}")
 
