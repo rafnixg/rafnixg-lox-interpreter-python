@@ -14,6 +14,24 @@ class Scanner:
         self.current: int = 0
         self.line: int = 1
         self.error = False
+        self.keywords = {
+            "and": TokenType.AND,
+            "class": TokenType.CLASS,
+            "else": TokenType.ELSE,
+            "false": TokenType.FALSE,
+            "for": TokenType.FOR,
+            "fun": TokenType.FUN,
+            "if": TokenType.IF,
+            "nil": TokenType.NIL,
+            "or": TokenType.OR,
+            "print": TokenType.PRINT,
+            "return": TokenType.RETURN,
+            "super": TokenType.SUPER,
+            "this": TokenType.THIS,
+            "true": TokenType.TRUE,
+            "var": TokenType.VAR,
+            "while": TokenType.WHILE,
+        }
 
     def error_message(self, message: str) -> None:
         """Print an error message."""
@@ -102,6 +120,8 @@ class Scanner:
                 self.string()
             case _ if c.isdigit():
                 self.number()
+            case _ if c.isalpha() or c == "_":
+                self.identifier()
             case _:
                 self.error_message(f"Unexpected character: {c}")
 
@@ -168,3 +188,12 @@ class Scanner:
         self.add_token(
             TokenType.NUMBER, float(self.source_code[self.start : self.current])
         )
+
+    def identifier(self) -> None:
+        """Scan an identifier."""
+        while self._peek().isalnum() or self._peek() == "_":
+            self.advance()
+
+        text = self.source_code[self.start : self.current]
+        token_type = self.keywords.get(text, TokenType.IDENTIFIER)
+        self.add_token(token_type)
