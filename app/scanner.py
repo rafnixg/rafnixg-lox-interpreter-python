@@ -100,6 +100,8 @@ class Scanner:
                 self.line += 1
             case '"':
                 self.string()
+            case _ if c.isdigit():
+                self.number()
             case _:
                 self.error_message(f"Unexpected character: {c}")
 
@@ -108,6 +110,12 @@ class Scanner:
         if self.is_at_end():
             return "\0"
         return self.source_code[self.current]
+
+    def _peek_next(self) -> str:
+        """Return the character after the next character."""
+        if self.current + 1 >= len(self.source_code):
+            return "\0"
+        return self.source_code[self.current + 1]
 
     def _match(self, expected: str) -> bool:
         """Check if the current character is equal to the expected character."""
@@ -144,3 +152,19 @@ class Scanner:
         # Trim the surrounding quotes.
         value = self.source_code[self.start + 1 : self.current - 1]
         self.add_token(TokenType.STRING, value)
+
+    def number(self) -> None:
+        """Scan a number."""
+        while self._peek().isdigit():
+            self.advance()
+
+        # Look for a fractional part.
+        if self._peek() == "." and self._peek_next().isdigit():
+            self.advance()
+
+            while self._peek().isdigit():
+                self.advance()
+
+        self.add_token(
+            TokenType.NUMBER, float(self.source_code[self.start : self.current])
+        )
