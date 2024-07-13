@@ -85,7 +85,7 @@ class Token:
     ) -> None:
         self.token_type = token_type
         self.lexeme = lexeme
-        self.literal = literal
+        self.literal = literal if literal is not None else 'null'
         self.line = line
 
     def __str__(self) -> str:
@@ -101,16 +101,39 @@ class Scanner:
     def __init__(self, source_code: str) -> None:
         self.source_code: str = source_code
         self.tokens: list[Token] = []
+        self.start: int = 0
+        self.current: int = 0
+        self.line: int = 1
+
+    def is_at_end(self) -> bool:
+        """Check if the scanner is at the end of the source code."""
+        return self.current >= len(self.source_code)
+
+    def advance(self) -> str:
+        """Advance the scanner."""
+        self.current += 1
+        return self.source_code[self.current - 1]
+
+    def add_token(self, token_type: TokenType, literal: object = None) -> None:
+        """Add a token to the list of tokens."""
+        text = self.source_code[self.start : self.current]
+        self.tokens.append(Token(token_type, text, literal, self.line))
 
     def scan_tokens(self) -> None:
         """Scan the tokens."""
-        line = 1
-        self.scan_token(0)
-        self.tokens.append(Token(TokenType.EOF, "", 'null', line))
+        while not self.is_at_end():
+            self.start = self.current
+            self.scan_token()
+        self.tokens.append(Token(TokenType.EOF, "", None, self.line))
 
-    def scan_token(self, start: int) -> None:
+    def scan_token(self) -> None:
         """Scan a token."""
-        # TODO: Implement the scanner
+        c = self.advance()
+        match c:
+            case "(":
+                self.add_token(TokenType.LEFT_PAREN)
+            case ")":
+                self.add_token(TokenType.RIGHT_PAREN)
 
     def print_tokens(self) -> None:
         """Print the tokens."""
