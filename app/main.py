@@ -138,6 +138,18 @@ class Scanner:
                 self.add_token(TokenType.LEFT_BRACE)
             case "}":
                 self.add_token(TokenType.RIGHT_BRACE)
+            case ",":
+                self.add_token(TokenType.COMMA)
+            case ".":
+                self.add_token(TokenType.DOT)
+            case "-":
+                self.add_token(TokenType.MINUS)
+            case "+":
+                self.add_token(TokenType.PLUS)
+            case ";":
+                self.add_token(TokenType.SEMICOLON)
+            case "*":
+                self.add_token(TokenType.STAR)
 
     def print_tokens(self) -> None:
         """Print the tokens."""
