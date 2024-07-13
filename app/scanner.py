@@ -70,8 +70,41 @@ class Scanner:
                 self.add_token(TokenType.SEMICOLON)
             case "*":
                 self.add_token(TokenType.STAR)
+            case "=":
+                self.add_token(
+                    TokenType.EQUAL
+                    if not self._check_equal("=")
+                    else TokenType.EQUAL_EQUAL
+                )
+            case "!":
+                self.add_token(
+                    TokenType.BANG
+                    if not self._check_equal("=")
+                    else TokenType.BANG_EQUAL
+                )
+            case "<":
+                self.add_token(
+                    TokenType.LESS
+                    if not self._check_equal("=")
+                    else TokenType.LESS_EQUAL
+                )
+            case ">":
+                self.add_token(
+                    TokenType.GREATER
+                    if not self._check_equal("=")
+                    else TokenType.GREATER_EQUAL
+                )
             case _:
                 self.error_message(f"Unexpected character: {c}")
+
+    def _check_equal(self, expected: str) -> bool:
+        """Check if the current character is equal to the expected character."""
+        if self.is_at_end():
+            return False
+        if self.source_code[self.current] != expected:
+            return False
+        self.current += 1
+        return True
 
     def print_tokens(self) -> None:
         """Print the tokens."""
