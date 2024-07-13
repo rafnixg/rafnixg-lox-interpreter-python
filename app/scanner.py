@@ -72,21 +72,15 @@ class Scanner:
                 self.add_token(TokenType.STAR)
             case "=":
                 self.add_token(
-                    TokenType.EQUAL
-                    if not self._match("=")
-                    else TokenType.EQUAL_EQUAL
+                    TokenType.EQUAL if not self._match("=") else TokenType.EQUAL_EQUAL
                 )
             case "!":
                 self.add_token(
-                    TokenType.BANG
-                    if not self._match("=")
-                    else TokenType.BANG_EQUAL
+                    TokenType.BANG if not self._match("=") else TokenType.BANG_EQUAL
                 )
             case "<":
                 self.add_token(
-                    TokenType.LESS
-                    if not self._match("=")
-                    else TokenType.LESS_EQUAL
+                    TokenType.LESS if not self._match("=") else TokenType.LESS_EQUAL
                 )
             case ">":
                 self.add_token(
@@ -100,10 +94,12 @@ class Scanner:
                         self.advance()
                 else:
                     self.add_token(TokenType.SLASH)
-            case ' ' | '\r' | '\t':
+            case " " | "\r" | "\t":
                 pass
-            case '\n':
+            case "\n":
                 self.line += 1
+            case '"':
+                self.string()
             case _:
                 self.error_message(f"Unexpected character: {c}")
 
@@ -130,3 +126,21 @@ class Scanner:
     def get_tokens(self) -> list[Token]:
         """Return the tokens."""
         return self.tokens
+
+    def string(self) -> None:
+        """Scan a string."""
+        while self._peek() != '"' and not self.is_at_end():
+            if self._peek() == "\n":
+                self.line += 1
+            self.advance()
+
+        if self.is_at_end():
+            self.error_message("Unterminated string.")
+            return
+
+        # The closing ".
+        self.advance()
+
+        # Trim the surrounding quotes.
+        value = self.source_code[self.start + 1 : self.current - 1]
+        self.add_token(TokenType.STRING, value)
