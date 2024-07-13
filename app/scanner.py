@@ -73,31 +73,43 @@ class Scanner:
             case "=":
                 self.add_token(
                     TokenType.EQUAL
-                    if not self._check_equal("=")
+                    if not self._match("=")
                     else TokenType.EQUAL_EQUAL
                 )
             case "!":
                 self.add_token(
                     TokenType.BANG
-                    if not self._check_equal("=")
+                    if not self._match("=")
                     else TokenType.BANG_EQUAL
                 )
             case "<":
                 self.add_token(
                     TokenType.LESS
-                    if not self._check_equal("=")
+                    if not self._match("=")
                     else TokenType.LESS_EQUAL
                 )
             case ">":
                 self.add_token(
                     TokenType.GREATER
-                    if not self._check_equal("=")
+                    if not self._match("=")
                     else TokenType.GREATER_EQUAL
                 )
+            case "/":
+                if self._match("/"):
+                    while self._peek() != "\n" and not self.is_at_end():
+                        self.advance()
+                else:
+                    self.add_token(TokenType.SLASH)
             case _:
                 self.error_message(f"Unexpected character: {c}")
 
-    def _check_equal(self, expected: str) -> bool:
+    def _peek(self) -> str:
+        """Return the next character."""
+        if self.is_at_end():
+            return "\0"
+        return self.source_code[self.current]
+
+    def _match(self, expected: str) -> bool:
         """Check if the current character is equal to the expected character."""
         if self.is_at_end():
             return False
