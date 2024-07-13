@@ -31,13 +31,13 @@ Hello, world!
 
 Actually, the interpreter is not fully implemented.
 
-[x] Scanning and tokenizing
-[-] Parsing
-[-] Evaluating expressions
-[-] Evaluating statements
-[-] Arithmetic operations
-[-] Variables
-[-] Control flow (if statements)
-[-] Functions
-[-] Standard library functions (e.g. `clock()`)
-[-] Classes
+- [x] Scanning and tokenizing
+- [-] Parsing
+- [-] Evaluating expressions
+- [-] Evaluating statements
+- [-] Arithmetic operations
+- [-] Variables
+- [-] Control flow (if statements)
+- [-] Functions
+- [-] Standard library functions (e.g. `clock()`)
+- [-] Classes
