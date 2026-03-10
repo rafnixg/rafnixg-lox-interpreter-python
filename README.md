@@ -1,43 +1,88 @@
-[![progress-banner](https://backend.codecrafters.io/progress/interpreter/9459789f-a865-4088-928d-d1d8b4816a8f)](https://app.codecrafters.io/users/codecrafters-bot?r=2qF)
-
-This is a starting point for Python solutions to the
-["Build Your Own Build your own Interpreter" Challenge](https://app.codecrafters.io/courses/interpreter/overview).
-
-In this challenge, you'll build a simple interpreter for a custom language.
-Lox is a simple language that supports variables, control flow, and functions.
-
-**Note**: To try the challenge: [codecrafters.io](https://codecrafters.io)
-
 # Lox Interpreter in Python
 
-This is a Python implementation of the Lox interpreter. It is based on the book [Crafting Interpreters](https://craftinginterpreters.com/).
+[![progress-banner](https://backend.codecrafters.io/progress/interpreter/9459789f-a865-4088-928d-d1d8b4816a8f)](https://app.codecrafters.io/users/codecrafters-bot?r=2qF)
 
-## Running the interpreter
+A Python implementation of the **Lox** interpreter, built as part of the
+["Build Your Own Interpreter" Challenge](https://app.codecrafters.io/courses/interpreter/overview) on [CodeCrafters](https://codecrafters.io).
 
-To run the interpreter, you can use the following command:
+Lox is a simple, dynamically-typed language described in the book
+[Crafting Interpreters](https://craftinginterpreters.com/) by Robert Nystrom.
+
+---
+
+## Prerequisites
+
+- Python 3.12+
+- [Pipenv](https://pipenv.pypa.io/)
+
+## Installation
 
 ```bash
-$ ./your_program.sh <path_to_lox_file>
+# Install dependencies
+pipenv install
 ```
 
-For example:
+## Usage
+
+Run the interpreter using the provided shell script:
 
 ```bash
-$ ./your_program.sh examples/hello_world.lox
-Hello, world!
+./your_program.sh <command> <path_to_lox_file>
 ```
 
-## Supported features
+### Available commands
 
-Actually, the interpreter is not fully implemented.
+| Command    | Description                          |
+|------------|--------------------------------------|
+| `tokenize` | Scan and print all tokens in a file  |
 
-- [x] Scanning and tokenizing
-- [-] Parsing
-- [-] Evaluating expressions
-- [-] Evaluating statements
-- [-] Arithmetic operations
-- [-] Variables
-- [-] Control flow (if statements)
-- [-] Functions
-- [-] Standard library functions (e.g. `clock()`)
-- [-] Classes
+### Example
+
+```bash
+$ ./your_program.sh tokenize test.lox
+IDENTIFIER foo null
+IDENTIFIER bar null
+IDENTIFIER _hello null
+EOF  null
+```
+
+---
+
+## Project Structure
+
+```
+.
+├── app/
+│   ├── main.py          # Entry point — parses CLI arguments
+│   ├── interpreter.py   # Orchestrates command execution
+│   ├── scanner.py       # Lexer / tokenizer
+│   └── token.py         # Token and TokenType definitions
+├── test.lox             # Sample Lox source file
+├── your_program.sh      # Local run script
+├── codecrafters.yml     # CodeCrafters configuration
+└── Pipfile              # Python dependencies
+```
+
+---
+
+## Implementation Status
+
+| Feature                                     | Status |
+|---------------------------------------------|--------|
+| Scanning / Tokenizing                       | ✅ Done |
+| Parsing                                     | 🔲 Pending |
+| Evaluating expressions                      | 🔲 Pending |
+| Evaluating statements                       | 🔲 Pending |
+| Arithmetic operations                       | 🔲 Pending |
+| Variables                                   | 🔲 Pending |
+| Control flow (`if` / `while` / `for`)       | 🔲 Pending |
+| Functions                                   | 🔲 Pending |
+| Standard library functions (e.g. `clock()`) | 🔲 Pending |
+| Classes                                     | 🔲 Pending |
+
+---
+
+## References
+
+- [Crafting Interpreters](https://craftinginterpreters.com/) — the book this project is based on
+- [CodeCrafters — Build Your Own Interpreter](https://app.codecrafters.io/courses/interpreter/overview)
